@@ -1,3 +1,20 @@
+def imprimirMat(m):
+    for f in range(len(m)):
+        for c in range(len(m[f])):
+            print(m[f][c],end="\t")
+        print("")
+
+def transponerMat(m):
+    filas = len(m)
+    columnas = len(m[0])
+    mTranspuesta=[]        
+    for c in range(columnas):
+        mTranspuesta.append([None] * filas)
+    for f in range(filas):
+        for c in range(columnas):
+            mTranspuesta[c][f] = m[f][c]
+    return mTranspuesta
+
 def prodMayIngSem(mat,lst):
     lstIng=[]
     for f in range(len(mat)):
@@ -22,3 +39,5 @@ matVentas=[[100, 88, 92, 94, 85, 110, 100], #1
 
 prod,ingProd=prodMayIngSem(matVentas,lstPrecios)
 print("El producto que genera más ingresos en la semana es:",prod,f"- Vendió: ${ingProd:,}")
+mat=transponerMat(matVentas)
+imprimirMat(mat)
