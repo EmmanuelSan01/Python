@@ -9,7 +9,7 @@ def transponerMat(m):
     columnas = len(m[0])
     mTranspuesta=[]        
     for c in range(columnas):
-        mTranspuesta.append([None] * filas)
+        mTranspuesta.append([None]*filas)
     for f in range(filas):
         for c in range(columnas):
             mTranspuesta[c][f] = m[f][c]
