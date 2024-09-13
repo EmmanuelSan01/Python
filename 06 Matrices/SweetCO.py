@@ -13,12 +13,12 @@ def prodMayIngSem(mat,lst):
 #Productos: 1    2     3   4    5
 lstPrecios=[1500,5000,6500,2500,22500]
 
-#            Lu   Ma  Mi  Ju  Vi  Sa   Do
+#            Lu  Ma  Mi  Ju  Vi   Sa   Do
 matVentas=[[100, 88, 92, 94, 85, 110, 100], #1
-           [ 30,  42, 31, 32, 38, 40,  37], #2
-           [ 23,  35, 39, 45, 55, 60,  61], #3
-           [ 45,  50, 56, 65, 47, 57,  68], #4
-           [ 18,  25, 33, 21, 22, 28,  32]] #5
+           [ 30, 42, 31, 32, 38,  40,  37], #2
+           [ 23, 35, 39, 45, 55,  60,  61], #3
+           [ 45, 50, 56, 65, 47,  57,  68], #4
+           [ 18, 25, 33, 21, 22,  28,  32]] #5
 
 prod,ingProd=prodMayIngSem(matVentas,lstPrecios)
 print("El producto que genera más ingresos en la semana es:",prod,f"- Vendió: ${ingProd:,}")
