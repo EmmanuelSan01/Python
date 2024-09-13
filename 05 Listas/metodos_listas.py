@@ -45,3 +45,17 @@ lista=[40,30,5,90,20,1,20,50,60,20]
 
 #count
 print(lista.count(20))
+
+#del
+del(lista[3])
+print(lista)
+
+#limpiar listas
+lista.clear()
+print(lista)
+print(type(lista))
+
+#eliminar lista de la memoria
+# del lista
+# print(type(lista))
+# print(lista)
