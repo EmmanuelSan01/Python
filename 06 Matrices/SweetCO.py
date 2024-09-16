@@ -27,6 +27,17 @@ def prodMayIngSem(mat,lst):
     prod=lstIng.index(mayor)+1
     return [prod,mayor]
 
+def diaMayIng(mat,lst):
+    lstIng=[]
+    for f in range(len(mat)):
+        suma=0
+        for c in range(len(mat[f])):
+            suma+=mat[f][c]*lst[c]
+        lstIng.append(suma)
+    mayor=max(lstIng)
+    dia=lstIng.index(mayor)+1
+    return [dia,mayor]
+
 #Productos: 1    2     3   4    5
 lstPrecios=[1500,5000,6500,2500,22500]
 
@@ -40,4 +51,5 @@ matVentas=[[100, 88, 92, 94, 85, 110, 100], #1
 prod,ingProd=prodMayIngSem(matVentas,lstPrecios)
 print("El producto que genera más ingresos en la semana es:",prod,f"- Vendió: ${ingProd:,}")
 mat=transponerMat(matVentas)
-imprimirMat(mat)
+dia,ingresos=diaMayIng(mat,lstPrecios)
+print("El día de la semana con mayor ingresos por ventas es:",dia,f"- Vendió: ${ingresos:,}")
