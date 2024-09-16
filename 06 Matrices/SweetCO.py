@@ -51,5 +51,6 @@ matVentas=[[100, 88, 92, 94, 85, 110, 100], #1
 prod,ingProd=prodMayIngSem(matVentas,lstPrecios)
 print("El producto que genera más ingresos en la semana es:",prod,f"- Vendió: ${ingProd:,}")
 mat=transponerMat(matVentas)
+#imprimirMat(mat)
 dia,ingresos=diaMayIng(mat,lstPrecios)
 print("El día de la semana con mayor ingresos por ventas es:",dia,f"- Vendió: ${ingresos:,}")
