@@ -47,3 +47,19 @@ def matrizIdentidad(mat):
         return mat
     else:
         return None
+    
+def matrizDiagonalS(mat):
+    tamf=len(mat)
+    tamc=len(mat[0])
+    if tamf==tamc: #la matriz identidad es cuadrada
+
+        for f in range(tamf):
+            for c in range(tamc):
+                mat[f][c]=0
+                for c in range((len(mat)-1),-1,-1):
+                    if c==len(mat)-1:
+                        mat[f][c]=1
+                        c-=1
+        return mat
+    else:
+        return None
