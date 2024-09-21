@@ -13,24 +13,25 @@ def leerUsuario():
 
 def leerPassword():
         try:
-            password = input("\nCONTRASEÑA:\t").strip()
+            password=input("\nCONTRASEÑA:\t").strip()
             if len(password)>0:
                 return password
             print("\tERROR. Contraseña no válida")
         except Exception as e:
             print("\tError al ingresar la contraseña.\n"+e)
 
-def guardar(credentials,arch):
-    with open(arch,"w") as fd:
-        json.dump(credentials,fd)
+def guardar(users,file):
+    with open(file,"w") as fd:
+        json.dump(users,fd)
     if not fd.closed:
         fd.close()
 
-def cargar(arch):
-    credentials=Path(arch)
+def cargar(file):
+    credentials=Path(file)
+    users={}
     if credentials.is_file():
         try:
-            with open(arch,"r") as fd:
+            with open(file,"r") as fd:
                 users=json.load(fd)
             if not fd.closed:
                 fd.close()
@@ -39,23 +40,25 @@ def cargar(arch):
     else:
         print("\tERROR. El archivo no existe.\n")
         input("Presione cualquier tecla para continuar...")
-    return {    }
+    return users
 
-def login(credentials, arch):
-    nickname = leerUsuario()
-    if nickname not in credentials:
-        password = leerPassword()
-        credentials[nickname] = {
+def login(users,file):
+    nickname=leerUsuario()
+    if nickname not in users:
+        nickname=leerUsuario()
+        password=leerPassword()
+        credentials={
             "usuario": nickname,
             "contraseña": password,
         }
-        credentials = dict(sorted(credentials.items()))
-        guardar(credentials, arch)
+        users[nickname]=credentials
+        users=dict(sorted(users.items()))
+        guardar(users,file)
         print("Usuario registrado exitosamente.")
     else:
         print("El usuario ya existe en la base de datos.")
     input("Presione cualquier tecla para continuar...")
-    return credentials
+    return users
 
 def menu():
     while True:
@@ -86,9 +89,9 @@ def menu():
             input("Presione cualquier letra para volver al menu...")
 
 users={}
-credentials="PROYECTO/crecenciales.json"
-users = cargar(credentials)
-users = login(users, credentials)
+users="PROYECTO/crecenciales.json"
+users = cargar(users)
+users = login(users, users)
 
 
 
