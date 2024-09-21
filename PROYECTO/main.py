@@ -20,9 +20,9 @@ def leerPassword():
         except Exception as e:
             print("\tError al ingresar la contraseña.\n"+e)
 
-def guardar(users,arch):
+def guardar(credentials,arch):
     with open(arch,"w") as fd:
-        json.dump(users,fd)
+        json.dump(credentials,fd)
     if not fd.closed:
         fd.close()
 
@@ -41,21 +41,21 @@ def cargar(arch):
         input("Presione cualquier tecla para continuar...")
     return {    }
 
-def login(users,arch):
-    user=leerUsuario()
-    if user not in users:
-        password=leerPassword()
-        users[user]={
-            "usuario": user,
+def login(credentials, arch):
+    nickname = leerUsuario()
+    if nickname not in credentials:
+        password = leerPassword()
+        credentials[nickname] = {
+            "usuario": nickname,
             "contraseña": password,
         }
-        users=dict(sorted(users.items()))
-        guardar(users, arch)
+        credentials = dict(sorted(credentials.items()))
+        guardar(credentials, arch)
         print("Usuario registrado exitosamente.")
     else:
-        print("El usuario ya existe en la base de datos.")    
+        print("El usuario ya existe en la base de datos.")
     input("Presione cualquier tecla para continuar...")
-    return users
+    return credentials
 
 def menu():
     while True:
