@@ -1,23 +1,22 @@
 import json
+from pathlib import Path
 
 def leerUsuario():
     while True:
         try:
-            nickname=input("\nUSUARIO:\t")
-            if len(nickname.strip())==0:
-                print("\tERROR. Usuario no válido")
-                continue
-            return nickname
+            nickname=input("\nUSUARIO:\t").strip()
+            if len(nickname)>0:
+                return nickname
+            print("\tERROR. Usuario no válido")
         except Exception as e:
             print("\tError al ingresar el usuario.\n"+e)
 
 def leerPassword():
         try:
-            password=input("\nCONTRASEÑA:\t")
-            if len(password.strip())==0:
-                print("\tERROR. contraseña no válida")
-                #continue
-            return password
+            password = input("\nCONTRASEÑA:\t").strip()
+            if len(password)>0:
+                return password
+            print("\tERROR. Contraseña no válida")
         except Exception as e:
             print("\tError al ingresar la contraseña.\n"+e)
 
@@ -27,24 +26,35 @@ def guardar(users,arch):
     if not fd.closed:
         fd.close()
 
+def cargar(arch):
+    credentials=Path(arch)
+    if credentials.is_file():
+        try:
+            with open(arch,"r") as fd:
+                users=json.load(fd)
+            if not fd.closed:
+                fd.close()
+        except Exception as e:
+            print("\t>>Error al abrir el archivo.\n"+e)
+    else:
+        print("\tERROR. El archivo no existe.\n")
+        input("Presione cualquier tecla para continuar...")
+    return {    }
+
 def login(users,arch):
     user=leerUsuario()
     if user not in users:
-        user=leerUsuario()
         password=leerPassword()
-
-        credentials={
-            "usuario":user,
-            "contraseña":password,
+        users[user]={
+            "usuario": user,
+            "contraseña": password,
         }
-
-        users[user]=credentials
         users=dict(sorted(users.items()))
-        guardar(users,arch)
+        guardar(users, arch)
+        print("Usuario registrado exitosamente.")
     else:
-        print("El código ya existe en la librería")
-
-    input("Presione cualquier letra para volver al menu...")
+        print("El usuario ya existe en la base de datos.")    
+    input("Presione cualquier tecla para continuar...")
     return users
 
 def menu():
@@ -77,9 +87,8 @@ def menu():
 
 users={}
 credentials="PROYECTO/crecenciales.json"
-leerUsuario()
-leerPassword()
-guardar(users,credentials)
+users = cargar(credentials)
+users = login(users, credentials)
 
 
 
