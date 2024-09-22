@@ -5,7 +5,7 @@ from persistencia.persistencia import cargar
 #PROGRAMA PRINCIPAL
 
 libreria={}
-archivo="09 json/librería/libreria.json"
+archivo="09 json\librería\persistencia\libreria.json"
 libreria=cargar(archivo)
 
 print(libreria)
