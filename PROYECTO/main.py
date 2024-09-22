@@ -9,7 +9,7 @@ def leerUsuario():
                 return nickname
             print("\tERROR. Usuario no válido")
         except Exception as e:
-            print("\tError al ingresar el usuario.\n"+e)
+            print(f"\tError al ingresar el usuario.\n{e}")
 
 def leerPassword():
         try:
@@ -18,47 +18,47 @@ def leerPassword():
                 return password
             print("\tERROR. Contraseña no válida")
         except Exception as e:
-            print("\tError al ingresar la contraseña.\n"+e)
+            print(f"\tError al ingresar la contraseña.\n{e}")
 
-def guardar(users,file):
+def guardarCredenciales(credentials,file):
     with open(file,"w") as fd:
-        json.dump(users,fd)
+        json.dump(credentials,fd)
     if not fd.closed:
         fd.close()
 
-def cargar(file):
-    credentials=Path(file)
-    users={}
-    if credentials.is_file():
+def cargarCredenciales(file):
+    credentials_path = Path(file)
+    if credentials_path.is_file():
         try:
-            with open(file,"r") as fd:
-                users=json.load(fd)
-            if not fd.closed:
-                fd.close()
+            with open(file, "r") as fd:
+                return json.load(fd)
         except Exception as e:
-            print("\t>>Error al abrir el archivo.\n"+e)
+            print(f"\t>>Error al abrir el archivo.\n{e}")
     else:
         print("\tERROR. El archivo no existe.\n")
         input("Presione cualquier tecla para continuar...")
-    return users
+    return None
 
-def login(users,file):
-    nickname=leerUsuario()
-    if nickname not in users:
-        nickname=leerUsuario()
-        password=leerPassword()
-        credentials={
-            "usuario": nickname,
-            "contraseña": password,
-        }
-        users[nickname]=credentials
-        users=dict(sorted(users.items()))
-        guardar(users,file)
+def login(file):
+    credentials=cargarCredenciales(file)
+    if credentials is None:
+        credentials={"usuario": "", "contraseña": "SISGESA"}    
+    user=leerUsuario()
+    password=leerPassword()    
+    if credentials["usuario"]=="":
+        credentials["usuario"]=user
+        credentials["contraseña"]=password
+        guardarCredenciales(credentials,file)
         print("Usuario registrado exitosamente.")
+    elif credentials["usuario"]==user:
+        if credentials["contraseña"]==password:
+            print("Inicio de sesión exitoso.")
+        else:
+            print("Contraseña incorrecta.")
     else:
-        print("El usuario ya existe en la base de datos.")
+        print("Usuario no registrado.")    
     input("Presione cualquier tecla para continuar...")
-    return users
+    return credentials
 
 def menu():
     while True:
@@ -88,12 +88,8 @@ def menu():
             print("ERROR. Opción no válida.")
             input("Presione cualquier letra para volver al menu...")
 
-users={}
-users="PROYECTO/crecenciales.json"
-users = cargar(users)
-users = login(users, users)
-
-
+credentialsFile="PROYECTO\crecenciales.json"
+credentials=login(credentialsFile)
 
 while True:
     op=menu()
